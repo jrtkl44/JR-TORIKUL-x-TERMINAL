@@ -1,0 +1,365 @@
+/* --- Variables & Reset --- */
+:root {
+    --bg-color: #0f172a;       /* Deep Terminal Background */
+    --text-color: #dfe6e9;     /* Light Grey Text */
+    --prompt-user: #00b894;    /* Green username */
+    --prompt-path: #0984e3;    /* Blue directory */
+    --cmd-color: #f1f2f6;      /* White command text */
+    --accent-color: #fdcb6e;   /* Yellow/Orange accents */
+    --error-color: #ff7675;    /* Red error text */
+    --link-color: #74b9ff;     /* Link Blue */
+    --header-bg: #1e293b;      /* Slightly lighter header */
+    --font-stack: 'Ubuntu Mono', 'Courier New', monospace;
+    --scrollbar-track: #0f172a;
+    --scrollbar-thumb: #334155;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-stack);
+    font-size: 18px; 
+    line-height: 1.6;
+    overflow: hidden; /* Prevent body scroll, only terminal scrolls */
+    
+    /* Fix for Mobile Browser Bar Issue */
+    height: 100vh;        /* Fallback */
+    height: 100dvh;       /* Dynamic height for mobile browsers */
+    
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Custom Scrollbar (WebKit) --- */
+/* This makes the scrollbar dark and thin like a real terminal */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track); 
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb); 
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #475569; 
+}
+
+/* --- Header (Like Terminal Title Bar/Menu) --- */
+/* --- Header (Like Terminal Title Bar/Menu) --- */
+.navbar {
+    flex-shrink: 0;
+    width: 100%;
+    background-color: var(--header-bg);
+    border-bottom: 1px solid #334155;
+    padding: 10px 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    /* This ensures the nav takes full width to allow spacing */
+    width: 100%; 
+    align-items: center;
+}
+
+.navbar a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.navbar a:hover {
+    color: var(--prompt-user);
+}
+
+/* GUI Button Styles */
+.navbar .gui-btn {
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 2px 8px;
+    
+    /* This pushes the button to the far RIGHT */
+    margin-left: auto; 
+}
+/* --- Main Terminal Window --- */
+.terminal {
+    /* Full width and remaining height */
+    flex-grow: 1;
+    width: 100%; 
+    max-width: 100%; /* Removes the centered box constraint */
+    padding: 20px 30px; /* Comfortable padding from edges */
+    overflow-y: auto; /* Internal scrolling */
+    display: block;
+}
+
+/* Input Line */
+.input-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.prompt-text {
+    margin-right: 10px;
+    white-space: nowrap;
+    /* Ensure prompt text doesn't shrink */
+    flex-shrink: 0; 
+}
+
+input#command-input {
+    background: transparent;
+    border: none;
+    color: var(--cmd-color);
+    font-family: var(--font-stack);
+    font-size: inherit;
+    flex-grow: 1; /* Takes up rest of the line */
+    outline: none;
+    caret-color: var(--text-color);
+    padding: 0;
+    margin: 0;
+}
+
+/* Output Styles */
+#output div {
+    margin-bottom: 5px;
+    word-wrap: break-word;
+}
+
+.output-content {
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* --- Neofetch Layout (Desktop Full Width) --- */
+.neofetch-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px; /* More gap for desktop */
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.neofetch-img {
+    flex-shrink: 0;
+    width: 370px; /* Slightly larger image for desktop */
+}
+
+.neofetch-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+    border: 2px solid #334155;
+}
+
+.neofetch-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Grid for perfect alignment */
+.neo-row {
+    display: grid;
+    grid-template-columns: 160px 1fr; /* Fixed label width */
+    gap: 15px; 
+    margin-bottom: 4px;
+    align-items: baseline;
+}
+
+.neo-title {
+    color: var(--prompt-user);
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.neo-sep {
+    color: #636e72;
+    margin-bottom: 15px;
+}
+
+.neo-key {
+    color: var(--prompt-user);
+    font-weight: bold;
+    text-align: left;
+}
+
+.neo-val {
+    color: var(--text-color);
+}
+
+/* --- Colors & Utilities --- */
+.dir { color: var(--prompt-path); font-weight: bold; }
+.file { color: var(--text-color); }
+.exec { color: var(--accent-color); font-weight: bold; }
+.txt-green { color: var(--prompt-user); }
+.txt-red { color: var(--error-color); }
+.cmd-history { color: #636e72; }
+
+/* Help Grid */
+.help-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    max-width: 800px;
+}
+
+/* Footer Hint */
+.gui-hint {
+    flex-shrink: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--bg-color);
+    border-top: 1px solid #334155;
+    font-size: 0.9rem;
+    color: #636e72;
+    
+    /* Safe Area fix for iPhone/Android Home Bar */
+    padding-bottom: calc(10px + env(safe-area-inset-bottom)); 
+}
+.gui-hint a { color: var(--link-color); text-decoration: none; }
+
+
+/* --- Text Selection Logic --- */
+.terminal, .terminal * {
+    user-select: text;       /* Allow selection everywhere */
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+}
+
+/* Custom Selection Color (Optional - makes it look pro) */
+::selection {
+    background: var(--text-color); 
+    color: var(--bg-color);
+}
+::-moz-selection {
+    background: var(--text-color); 
+    color: var(--bg-color);
+}
+
+
+/* --- Mobile Responsive Updates (Button Top, Links Bottom) --- */
+@media (max-width: 768px) {
+    body {
+        font-size: 12px;
+    }
+
+    /* Navbar: Container */
+    .navbar {
+        padding: 10px 0;
+        background-color: var(--header-bg);
+        border-bottom: 1px solid #334155;
+    }
+
+    .navbar nav {
+        display: flex;
+        flex-wrap: wrap; /* Allows items to stack */
+        justify-content: center; /* Center horizontally */
+        gap: 12px; /* Gap between button row and links row */
+        width: 100%;
+    }
+
+    /* GUI Button: Positioned FIRST (Top Line) */
+    .navbar .gui-btn {
+        order: -1; /* Moves button to the visual top */
+        flex-basis: 100%; /* Forces it to take the full first line */
+        width: fit-content; /* Border shrinks to text size */
+        margin: 0 auto; /* Centers the button */
+        
+        /* Style remains same */
+        color: var(--accent-color);
+        border: 1px solid var(--accent-color);
+        background: transparent;
+        padding: 3px 14px;
+        border-radius: 4px;
+        font-size: 11px;
+        text-align: center;
+        text-transform: lowercase;
+    }
+
+    /* Top Links: Positioned NEXT (Second Line) */
+    .navbar a:not(.gui-btn) {
+        font-size: 11px;
+        color: #94a3b8;
+        text-decoration: none;
+        letter-spacing: 0.5px;
+        display: inline-block;
+    }
+
+    /* Terminal Padding */
+    .terminal {
+        padding: 15px 10px; 
+    }
+
+    /* Neofetch: Side-by-Side */
+    .neofetch-container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .neofetch-img {
+        flex-shrink: 0;
+        width: 90px;
+    }
+    
+    .neofetch-img img {
+        width: 100%;
+        height: auto;
+        border: 1px solid #334155;
+    }
+
+    .neofetch-info {
+        flex-grow: 1;
+        width: 100%;
+    }
+
+    .neo-title {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+        color: var(--prompt-user);
+    }
+    
+    .neo-sep {
+        display: none;
+    }
+
+    /* Data Rows */
+    .neo-row {
+        display: grid;
+        grid-template-columns: 65px 1fr;
+        gap: 5px;
+        font-size: 10px;
+        line-height: 1.5;
+        margin-bottom: 2px;
+    }
+    
+    /* Footer */
+    .gui-hint {
+        font-size: 10px;
+        padding: 10px;
+    }
+}

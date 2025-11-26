@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JR Torikul | Terminal Portfolio</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <nav>
+            <a href="#" onclick="execLink('projects')">projects</a>
+            <a href="#" onclick="execLink('skills')">skills</a>
+            <a href="#" onclick="execLink('about')">about</a>
+            <a href="#" onclick="execLink('social')">social</a>
+            <a href="#" onclick="execLink('contact')">contact</a>
+            <a href="#" onclick="execLink('github')">github</a>
+            <a href="#" onclick="execLink('gui')" class="gui-btn">gui-version</a>
+        </nav>
+    </header>
+
+    <main class="terminal" id="terminal-window" onclick="focusInput()">
+        <div id="output"></div>
+        
+        <div class="input-line">
+            <span id="prompt-label" class="prompt-text">jrtkl@portfolio:$</span>
+            <input type="text" id="command-input" autocomplete="off" spellcheck="false" autofocus>
+        </div>
+    </main>
+
+    <footer class="gui-hint">
+        Prefer graphical interface? &rarr; <a href="https://jrtkl-gui.netlify.app" target="_blank">jrtkl-gui.netlify.app</a>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+</html>
