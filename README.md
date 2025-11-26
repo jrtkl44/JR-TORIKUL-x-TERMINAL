@@ -33,7 +33,11 @@ assets/
 index.html
 ```
 
-## Author
+
+## Author  
 **JR Torikul Islam**  
-Network Engineer & Co-Founder of BongoLab IT  
-GitHub: @jrtkl44 | Email: jrtkl2005@gmail.com
+Network Engineer & Developer  
+
+GitHub: **[@jrtkl44](https://github.com/jrtkl44)**  
+Email: **jrtkl2005@gmail.com**  
+Facebook: **https://www.facebook.com/jrtkl**
