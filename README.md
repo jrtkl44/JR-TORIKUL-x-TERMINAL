@@ -24,14 +24,17 @@ cd JR-TORIKUL-x-TERMINAL
 ```
 Open `index.html`
 
-## Structure
-```
-assets/
-  css/style.css
-  img/
-  js/main.js
-index.html
-```
+JR-TORIKUL-x-TERMINAL/
+├── assets/
+│   ├── css/
+│   │   └── style.css       # Main terminal styling
+│   ├── img/
+│   │   ├── favicon.png
+│   │   └── profile.jpeg    # Your profile picture
+│   └── js/
+│       └── main.js         # Command logic & file system
+├── index.html              # Main entry point
+└── README.md
 
 
 ## Author  
