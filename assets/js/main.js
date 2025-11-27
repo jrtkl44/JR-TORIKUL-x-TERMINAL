@@ -24,12 +24,12 @@ const fileSystem = {
     }
 };
 
-// DOM Elements
+
 const outputDiv = document.getElementById('output');
 const commandInput = document.getElementById('command-input');
 const promptLabel = document.getElementById('prompt-label');
 
-// --- INITIALIZATION & SMART FOCUS ---
+
 window.onload = function() {
     printNeofetch();
     if (!hasSelection()) {
@@ -42,27 +42,21 @@ function hasSelection() {
     return selection.type === 'Range' && selection.toString().length > 0;
 }
 
-// Global listener to handle mouse interactions intelligently
-document.addEventListener('mouseup', function(e) {
-    // 1. If text is selected, ignore focus (allow Copy)
-    if (hasSelection()) return;
-    
-    // 2. If clicked on a link, ignore focus
-    if (e.target.tagName === 'A' || e.target.closest('a')) return;
 
-    // 3. Otherwise, focus input
+document.addEventListener('mouseup', function(e) {
+    if (hasSelection()) return;
+    if (e.target.tagName === 'A' || e.target.closest('a')) return;
     commandInput.focus();
 });
 
-// Execute command from Header
+
 function execLink(cmd) {
     commandInput.value = cmd;
     handleCommand(cmd);
 }
 
-// --- INPUT HANDLING ---
+
 commandInput.addEventListener('keydown', function(e) {
-    // Handle Ctrl+C (Interrupt Signal)
     if (e.ctrlKey && e.key === 'c') {
         if (!hasSelection()) {
             e.preventDefault();
@@ -71,7 +65,7 @@ commandInput.addEventListener('keydown', function(e) {
             scrollToBottom();
             return;
         }
-        // If selection exists, let browser perform native Copy
+
     }
 
     if (e.key === 'Enter') {
@@ -124,7 +118,7 @@ function printLine(html, className = '') {
     outputDiv.appendChild(div);
 }
 
-// --- NEOFETCH & COMMANDS ---
+
 function printNeofetch() {
     const html = `
     <div class="neofetch-container">
@@ -224,7 +218,7 @@ function handleCommand(cmdInput) {
     scrollToBottom();
 }
 
-// Helpers
+
 function getCurrentDirObj() {
     if (currentPath.length === 0) return fileSystem["root"];
     let current = fileSystem["root"];
